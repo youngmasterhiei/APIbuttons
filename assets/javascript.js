@@ -1,19 +1,27 @@
 $(document).ready(function () {
 
     
-    
-  
     var animalDiv = $("<div>");
 
 
 
     $("#animalSubmit").on("click", function () {
+        if ($("#userInputText").val()=== ''){
+            event.preventDefault();
+            alert("Not a valid submission");
+        }
+        else {
         event.preventDefault();
         userSearch = $("#userInputText").val();
+        
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + userSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
         newAnimalButton = $("<button>" + userSearch + "</button>");
         newAnimalButton.addClass("animalClass");
         $("#newButtonArea").append(newAnimalButton);
+        $("#userInputText").val('');
+  
+        }
+        
 
 
         $(newAnimalButton).on("click", function () {
@@ -24,6 +32,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (response) {
                     console.log(response);
+                   
                     animalDiv.empty();
                     for (var i = 0; i < 25; i++) {
                         var displayImageUrl = response.data[i].images.fixed_height_small.url;
