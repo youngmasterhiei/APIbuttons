@@ -1,7 +1,24 @@
+var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
 $(document).ready(function () {
 
     //needed to make a gloabl variable to avoid error at start. this is where the images and ratings are placed
     var animalDiv = $("<div>");
+
+
+
+
+
+    createStartingAnimals();
+
+    function createStartingAnimals() {
+        for (var j = 0; j < animalArray.length; j++) {
+            AnimalButton = $("<button>" + animalArray[j] + "</button>");
+            AnimalButton.addClass("animalClass");
+            $("#newButtonArea").append(AnimalButton);
+
+        };
+    };
+
 
 
     //on click function
@@ -23,6 +40,7 @@ $(document).ready(function () {
             $("#newButtonArea").append(newAnimalButton);
             // resets the user input box to blank after submit
             $("#userInputText").val('');
+
 
         }
 
