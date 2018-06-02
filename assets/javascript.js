@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     //needed to make a gloabl variable to avoid error at start. this is where the images and ratings are placed
     var animalDiv = $("<div>");
+    animalDiv.addClass("imageDivStyle");
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
 
 
@@ -22,15 +23,17 @@ $(document).ready(function () {
     $(".animalClass").on("click", function () {
         var buttonSearch = $(this).text();
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
-        console.log(buttonSearch);
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
             animalDiv.empty();
             for (var i = 0; i < 25; i++) {
+                //grabs the still image from api
                 var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
+                //grabs the gif image from api
                 var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
+                //grabs the rating from api
                 var rating = response.data[i].rating;
                 var image = $("<img>");
                 image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
