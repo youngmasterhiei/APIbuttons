@@ -2,13 +2,36 @@
 $(document).ready(function () {
 
     //needed to make a gloabl variable to avoid error at start. this is where the images and ratings are placed
-    var animalDiv = $("<div>");
-  
+
+    //append inside of container div on html
+    var rowDiv = $("<div>").addClass("row");
+    //append maincolumndiv and search div to row div
+    var mainColumnDiv = $("<div id='mainArea'></div>").addClass("col-lg-8");
+    //append rowtitlediv to mainColumndiv
+    var mainRowTitleDiv = $("<div id='title'></div>").addClass("row");
+    //append buttonRowDiv to mainColumnDiv
+    var buttonRowDiv = $("<div id='buttonArea'></div>");
+    
+    //append maincolumndiv and search div to row div
+    var searchColumnDiv = $("<div id='searchArea'></div>").addClass("col-lg-4");
+
+
+    var animalDiv = $("<div>").addClass("row");
     animalDiv.addClass("imageDivStyle");
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
+    var buttonLabel = $("<label>Enter an animal</label>");
+    var searchButton = $("<input type='text' id='userInputText'>");
+    var submitButton = $("<input type='submit' value='enter' id='animalSubmit'>");
 
+ 
 
-
+$("#wholePageDiv").append(rowDiv);
+rowDiv.append(mainColumnDiv);
+rowDiv.append(searchColumnDiv);
+mainColumnDiv.append(mainRowTitleDiv);
+mainColumnDiv.append(buttonRowDiv);
+mainColumnDiv.append(animalDiv);
+searchColumnDiv.append(buttonLabel, searchButton, submitButton );
 
 
 
@@ -17,7 +40,10 @@ $(document).ready(function () {
     for (var j = 0; j < animalArray.length; j++) {
         var animalButton = $("<button>" + animalArray[j] + "</button>");
         animalButton.addClass("animalClassBtn");
-        $("#newButtonArea").append(animalButton);
+        
+        
+        buttonRowDiv.append(animalButton);
+
 
     };
 
@@ -61,7 +87,7 @@ $(document).ready(function () {
                 eachImageDiv.append("Rating:" + rating);
                 eachImageDiv.append(image);
                 $("#searchResultArea").append(animalDiv);
-                eachImageDiv.addClass( "card imageDivStyle " );
+                eachImageDiv.addClass("card imageDivStyle ");
                 animalDiv.append(eachImageDiv);
 
 
@@ -88,7 +114,7 @@ $(document).ready(function () {
             // makes the new button
             newAnimalButton = $("<button>" + userSearch + "</button>");
             newAnimalButton.addClass("animalClassBtn");
-            $("#newButtonArea").append(newAnimalButton);
+            buttonRowDiv.append(newAnimalButton);
             // resets the user input box to blank after submit
             $("#userInputText").val('');
 
@@ -117,8 +143,8 @@ $(document).ready(function () {
                     //used to switch between still and gif image
                     image.addClass("still");
                     image.addClass("animalImageClass");
-                    
-                   
+
+
                     //switches between still image and gif
                     $(image).on("click", function () {
 
@@ -139,7 +165,7 @@ $(document).ready(function () {
                     eachImageDiv.append("Rating:" + rating);
                     eachImageDiv.append(image);
                     $("#searchResultArea").append(animalDiv);
-                    eachImageDiv.addClass( "card imageDivStyle " );
+                    eachImageDiv.addClass("card imageDivStyle ");
                     animalDiv.append(eachImageDiv);
 
 
