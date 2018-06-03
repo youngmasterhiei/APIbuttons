@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-    //needed to make a gloabl variable to avoid error at start. this is where the images and ratings are placed
+    
 
     //append inside of container div on html
     var rowDiv = $("<div>").addClass("row");
@@ -11,27 +11,34 @@ $(document).ready(function () {
     var mainRowTitleDiv = $("<div id='title'></div>").addClass("row");
     //append buttonRowDiv to mainColumnDiv
     var buttonRowDiv = $("<div id='buttonArea'></div>");
-    
+
     //append maincolumndiv and search div to row div
     var searchColumnDiv = $("<div id='searchArea'></div>").addClass("col-lg-4");
+    var animalDiv = $("<div>").addClass("row imageDivStyle");
 
-
-    var animalDiv = $("<div>").addClass("row");
-    animalDiv.addClass("imageDivStyle");
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
+
+    //append to searchColumnDiv
     var buttonLabel = $("<label>Enter an animal</label>");
     var searchButton = $("<input type='text' id='userInputText'>");
     var submitButton = $("<input type='submit' value='enter' id='animalSubmit'>");
 
- 
+    document.onkeyup = function (event) {
 
-$("#wholePageDiv").append(rowDiv);
-rowDiv.append(mainColumnDiv);
-rowDiv.append(searchColumnDiv);
-mainColumnDiv.append(mainRowTitleDiv);
-mainColumnDiv.append(buttonRowDiv);
-mainColumnDiv.append(animalDiv);
-searchColumnDiv.append(buttonLabel, searchButton, submitButton );
+        if (event.keyCode === 13) {
+            // Trigger the button element with a click
+            $("#animalSubmit").click();
+        }
+    };
+
+
+    $("#wholePageDiv").append(rowDiv);
+    rowDiv.append(mainColumnDiv);
+    rowDiv.append(searchColumnDiv);
+    mainColumnDiv.append(mainRowTitleDiv);
+    mainColumnDiv.append(buttonRowDiv);
+    mainColumnDiv.append(animalDiv);
+    searchColumnDiv.append(buttonLabel, searchButton, submitButton);
 
 
 
@@ -40,8 +47,8 @@ searchColumnDiv.append(buttonLabel, searchButton, submitButton );
     for (var j = 0; j < animalArray.length; j++) {
         var animalButton = $("<button>" + animalArray[j] + "</button>");
         animalButton.addClass("animalClassBtn");
-        
-        
+
+
         buttonRowDiv.append(animalButton);
 
 
@@ -101,14 +108,22 @@ searchColumnDiv.append(buttonLabel, searchButton, submitButton );
     //on click function
     $("#animalSubmit").on("click", function () {
         //checks if the user entered anything, if not alerts user, does not make button.
-        if ($("#userInputText").val() === '') {
+        if ($("#userInputText").val() === ''   ) {
             event.preventDefault();
+            
             alert("Not a valid submission");
+            $("#userInputText").val('');
+        }
+        else if (jQuery.inArray($("#userInputText").val(), animalArray) !== -1){
+            var word = $("#userInputText").val();
+            alert("There is already a " + word + " button" );
+            $("#userInputText").val('');
         }
         else {
             event.preventDefault();
             //takes the user's search and names the button 
             userSearch = $("#userInputText").val();
+            animalArray.push(userSearch);
             // api querurl
             var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + userSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
             // makes the new button
