@@ -2,7 +2,7 @@
     margin-right: 20px;
 }
 
-.animalClass {
+.animalClassBtn {
     margin-right: 1%;
     width: 8%;
     height: auto;
@@ -11,8 +11,14 @@
     margin-right: 2%;
     margin-top: 1%;
     margin-bottom: 1%;
+   
 }
 .imageDivStyle {
-    display: table;
-    width: 500px;
+    
+    float: left;
+}
+img {
+    width: 200px; 
+    height: 200px;
+    object-fit: cover;
 }

@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     //needed to make a gloabl variable to avoid error at start. this is where the images and ratings are placed
     var animalDiv = $("<div>");
+  
     animalDiv.addClass("imageDivStyle");
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
 
@@ -15,12 +16,12 @@ $(document).ready(function () {
 
     for (var j = 0; j < animalArray.length; j++) {
         var animalButton = $("<button>" + animalArray[j] + "</button>");
-        animalButton.addClass("animalClass");
+        animalButton.addClass("animalClassBtn");
         $("#newButtonArea").append(animalButton);
 
     };
 
-    $(".animalClass").on("click", function () {
+    $(".animalClassBtn").on("click", function () {
         var buttonSearch = $(this).text();
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
         $.ajax({
@@ -56,9 +57,12 @@ $(document).ready(function () {
 
                 });
                 // puts the div and images inside of an html div
+                var eachImageDiv = $("<div>");
+                eachImageDiv.append("Rating:" + rating);
+                eachImageDiv.append(image);
                 $("#searchResultArea").append(animalDiv);
-                animalDiv.append("Rating:" + rating);
-                animalDiv.append(image);
+                eachImageDiv.addClass( "card imageDivStyle " );
+                animalDiv.append(eachImageDiv);
 
 
             };
@@ -83,7 +87,7 @@ $(document).ready(function () {
             var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + userSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
             // makes the new button
             newAnimalButton = $("<button>" + userSearch + "</button>");
-            newAnimalButton.addClass("animalClass");
+            newAnimalButton.addClass("animalClassBtn");
             $("#newButtonArea").append(newAnimalButton);
             // resets the user input box to blank after submit
             $("#userInputText").val('');
@@ -104,14 +108,17 @@ $(document).ready(function () {
                 animalDiv.empty();
                 //loop for all the 25 images to display
                 for (var i = 0; i < 25; i++) {
-                    var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
-                    var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
+                    console.log(response);
+                    var displayStillImageUrl = response.data[i].images.fixed_height_still.url;
+                    var displayGifImageUrl = response.data[i].images.fixed_height.url;
                     var rating = response.data[i].rating;
                     var image = $("<img>");
                     image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
                     //used to switch between still and gif image
                     image.addClass("still");
                     image.addClass("animalImageClass");
+                    
+                   
                     //switches between still image and gif
                     $(image).on("click", function () {
 
@@ -128,9 +135,13 @@ $(document).ready(function () {
 
                     });
                     // puts the div and images inside of an html div
+                    var eachImageDiv = $("<div>");
+                    eachImageDiv.append("Rating:" + rating);
+                    eachImageDiv.append(image);
                     $("#searchResultArea").append(animalDiv);
-                    animalDiv.append("Rating:" + rating);
-                    animalDiv.append(image);
+                    eachImageDiv.addClass( "card imageDivStyle " );
+                    animalDiv.append(eachImageDiv);
+
 
 
                 };
