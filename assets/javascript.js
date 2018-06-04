@@ -55,51 +55,56 @@ $(document).ready(function () {
 
     };
 
-    $(".animalClassBtn").on("click", function () {
+    $(document).on("click", ".animalClassBtn", function () {
         var buttonSearch = $(this).text();
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + buttonSearch + "&api_key=I3LIxn3wdbBKTNOyOvfS4UCk3TvTUwrY";
         $.ajax({
             url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            animalDiv.empty();
-            for (var i = 0; i < response.data.length; i++) {
-                //grabs the still image from api
-                var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
-                //grabs the gif image from api
-                var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
-                //grabs the rating from api
-                var rating = response.data[i].rating;
-                var image = $("<img>");
-                image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
-                //used to switch between still and gif image
-                image.addClass("still");
-                image.addClass("animalImageClass");
-                //switches between still image and gif
-                $(image).on("click", function () {
+            method: "GET",
+            success: function (response) {
+                animalDiv.empty();
+                for (var i = 0; i < response.data.length; i++) {
+                    //grabs the still image from api
+                    var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
+                    //grabs the gif image from api
+                    var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
+                    //grabs the rating from api
+                    var rating = response.data[i].rating;
+                    var image = $("<img>");
+                    image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
+                    //used to switch between still and gif image
+                    image.addClass("still");
+                    image.addClass("animalImageClass");
+                    //switches between still image and gif
+                    $(image).on("click", function () {
 
-                    if ($(this).hasClass("still")) {
+                        if ($(this).hasClass("still")) {
 
-                        $(this).attr("src", $(this).attr("gif"));
-                        $(this).removeClass("still");
+                            $(this).attr("src", $(this).attr("gif"));
+                            $(this).removeClass("still");
 
-                    }
-                    else {
-                        $(this).attr("src", $(this).attr("still"));
-                        $(this).addClass("still");
-                    }
+                        }
+                        else {
+                            $(this).attr("src", $(this).attr("still"));
+                            $(this).addClass("still");
+                        }
 
-                });
-                // puts the div and images inside of an html div
-                var eachImageDiv = $("<div>");
-                eachImageDiv.append("Rating:" + rating);
-                eachImageDiv.append(image);
-                $("#searchResultArea").append(animalDiv);
-                eachImageDiv.addClass("card imageDivStyle ");
-                animalDiv.append(eachImageDiv);
+                    });
+                    // puts the div and images inside of an html div
+                    var eachImageDiv = $("<div>");
+                    eachImageDiv.append("Rating:" + rating);
+                    eachImageDiv.append(image);
+                    $("#searchResultArea").append(animalDiv);
+                    eachImageDiv.addClass("card imageDivStyle ");
+                    animalDiv.append(eachImageDiv);
 
 
-            };
+
+                };
+
+            }, error: function () {
+                alert("Were going to give it to you straight forward, something went wrong with the api, were not sure what, but i promise a giphy programmer is working hard to figure it out, please try again later. ");
+            }
         });
     });
 
@@ -138,65 +143,9 @@ $(document).ready(function () {
         }
 
 
-        // on click function for the created animal buttons
-        $(newAnimalButton).on("click", function () {
-
-
-            $.ajax({
-                url: queryURL,
-                method: "GET",
-                success: function (response) {
-                    //clears the div when clicking another button 
-                    animalDiv.empty();
-                    //loop for all the 25 images to display
-                    for (var i = 0; i < response.data.length; i++) {
-                        console.log(response);
-                        var displayStillImageUrl = response.data[i].images.fixed_height_still.url;
-                        var displayGifImageUrl = response.data[i].images.fixed_height.url;
-                        var rating = response.data[i].rating;
-                        var image = $("<img>");
-                        image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
-                        //used to switch between still and gif image
-                        image.addClass("still");
-                        image.addClass("animalImageClass");
-
-
-                        //switches between still image and gif
-                        $(image).on("click", function () {
-
-                            if ($(this).hasClass("still")) {
-
-                                $(this).attr("src", $(this).attr("gif"));
-                                $(this).removeClass("still");
-
-                            }
-                            else {
-                                $(this).attr("src", $(this).attr("still"));
-                                $(this).addClass("still");
-                            }
-
-                        });
-                        // puts the div and images inside of an html div
-                        var eachImageDiv = $("<div>");
-                        eachImageDiv.append("Rating:" + rating);
-                        eachImageDiv.append(image);
-                        $("#searchResultArea").append(animalDiv);
-                        eachImageDiv.addClass("card imageDivStyle ");
-                        animalDiv.append(eachImageDiv);
-
-
-
-                    };
-
-                }, error: function () {
-                    alert("hello");
-                }
-            });
-
-
-        });
-
     });
+
+
 
 
 });
