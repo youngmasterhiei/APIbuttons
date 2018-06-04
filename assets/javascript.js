@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-    var downloadGif = "";
+   
     var pageHeader = $("<h1> Animal Gifs! Enter a new animal on the right to see the images.");
     $("<body>").prepend(pageHeader);
     //append inside of container div on html
@@ -155,7 +155,7 @@ $(document).on("click", ".downloadBtn", function(){
     
     event.preventDefault();
 
-    window.location.href = downloadGif;
+    window.location.href = $(this).attr("href");
 
 });
 
