@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-
+    var downloadGif = "";
     var pageHeader = $("<h1> Animal Gifs! Enter a new animal on the right to see the images.");
     $("<body>").prepend(pageHeader);
     //append inside of container div on html
@@ -20,8 +20,8 @@ $(document).ready(function () {
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
 
     //append to searchColumnDiv
-    var buttonLabel = $("<label>Enter an animal</label>");
-    var searchButton = $("<input type='text' id='userInputText'>");
+
+    var searchButton = $("<input type='text' id='userInputText' placeholder='Enter an animal'>");
     var submitButton = $("<input type='submit' value='enter' id='animalSubmit'>");
 
     document.onkeyup = function (event) {
@@ -39,7 +39,7 @@ $(document).ready(function () {
     mainColumnDiv.append(mainRowTitleDiv);
     mainColumnDiv.append(buttonRowDiv);
     mainColumnDiv.append(animalDiv);
-    searchColumnDiv.append(buttonLabel, searchButton, submitButton);
+    searchColumnDiv.append(searchButton, submitButton);
 
 
 
@@ -64,10 +64,15 @@ $(document).ready(function () {
             success: function (response) {
                 animalDiv.empty();
                 for (var i = 0; i < response.data.length; i++) {
+                    
                     //grabs the still image from api
                     var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
                     //grabs the gif image from api
                     var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
+                    downloadGif = response.data[i].images.fixed_height_small.url;
+                    // straight up borrowed the i class styling from someone on wc3 school, liked the styling and it saved me time.
+                    var downloadButton = $("<button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button>");
+                    downloadButton.attr("href", downloadGif);
                     //grabs the rating from api
                     var rating = response.data[i].rating;
                     var image = $("<img>");
@@ -94,6 +99,7 @@ $(document).ready(function () {
                     var eachImageDiv = $("<div>");
                     eachImageDiv.append("Rating:" + rating);
                     eachImageDiv.append(image);
+                    eachImageDiv.append(downloadButton);
                     $("#searchResultArea").append(animalDiv);
                     eachImageDiv.addClass("card imageDivStyle ");
                     animalDiv.append(eachImageDiv);
@@ -145,7 +151,13 @@ $(document).ready(function () {
 
     });
 
+$(document).on("click", ".downloadBtn", function(){
+    
+    event.preventDefault();
 
+    window.location.href = downloadGif;
+
+});
 
 
 });
