@@ -1,8 +1,9 @@
 
 $(document).ready(function () {
 
-    
 
+    var pageHeader = $("<h1> Animal Gifs! Enter a new animal on the right to see the images.");
+    $("<body>").prepend(pageHeader);
     //append inside of container div on html
     var rowDiv = $("<div>").addClass("row");
     //append maincolumndiv and search div to row div
@@ -62,7 +63,7 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             animalDiv.empty();
-            for (var i = 0; i < 25; i++) {
+            for (var i = 0; i < response.data.length; i++) {
                 //grabs the still image from api
                 var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
                 //grabs the gif image from api
@@ -108,15 +109,15 @@ $(document).ready(function () {
     //on click function
     $("#animalSubmit").on("click", function () {
         //checks if the user entered anything, if not alerts user, does not make button.
-        if ($("#userInputText").val() === ''   ) {
+        if ($("#userInputText").val() === '') {
             event.preventDefault();
-            
+
             alert("Not a valid submission");
             $("#userInputText").val('');
         }
-        else if (jQuery.inArray($("#userInputText").val(), animalArray) !== -1){
+        else if (jQuery.inArray($("#userInputText").val(), animalArray) !== -1) {
             var word = $("#userInputText").val();
-            alert("There is already a " + word + " button" );
+            alert("There is already a " + word + " button");
             $("#userInputText").val('');
         }
         else {
@@ -143,50 +144,53 @@ $(document).ready(function () {
 
             $.ajax({
                 url: queryURL,
-                method: "GET"
-            }).then(function (response) {
-                //clears the div when clicking another button 
-                animalDiv.empty();
-                //loop for all the 25 images to display
-                for (var i = 0; i < 25; i++) {
-                    console.log(response);
-                    var displayStillImageUrl = response.data[i].images.fixed_height_still.url;
-                    var displayGifImageUrl = response.data[i].images.fixed_height.url;
-                    var rating = response.data[i].rating;
-                    var image = $("<img>");
-                    image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
-                    //used to switch between still and gif image
-                    image.addClass("still");
-                    image.addClass("animalImageClass");
+                method: "GET",
+                success: function (response) {
+                    //clears the div when clicking another button 
+                    animalDiv.empty();
+                    //loop for all the 25 images to display
+                    for (var i = 0; i < response.data.length; i++) {
+                        console.log(response);
+                        var displayStillImageUrl = response.data[i].images.fixed_height_still.url;
+                        var displayGifImageUrl = response.data[i].images.fixed_height.url;
+                        var rating = response.data[i].rating;
+                        var image = $("<img>");
+                        image.attr({ "src": displayStillImageUrl, "gif": displayGifImageUrl, "still": displayStillImageUrl });
+                        //used to switch between still and gif image
+                        image.addClass("still");
+                        image.addClass("animalImageClass");
 
 
-                    //switches between still image and gif
-                    $(image).on("click", function () {
+                        //switches between still image and gif
+                        $(image).on("click", function () {
 
-                        if ($(this).hasClass("still")) {
+                            if ($(this).hasClass("still")) {
 
-                            $(this).attr("src", $(this).attr("gif"));
-                            $(this).removeClass("still");
+                                $(this).attr("src", $(this).attr("gif"));
+                                $(this).removeClass("still");
 
-                        }
-                        else {
-                            $(this).attr("src", $(this).attr("still"));
-                            $(this).addClass("still");
-                        }
+                            }
+                            else {
+                                $(this).attr("src", $(this).attr("still"));
+                                $(this).addClass("still");
+                            }
 
-                    });
-                    // puts the div and images inside of an html div
-                    var eachImageDiv = $("<div>");
-                    eachImageDiv.append("Rating:" + rating);
-                    eachImageDiv.append(image);
-                    $("#searchResultArea").append(animalDiv);
-                    eachImageDiv.addClass("card imageDivStyle ");
-                    animalDiv.append(eachImageDiv);
+                        });
+                        // puts the div and images inside of an html div
+                        var eachImageDiv = $("<div>");
+                        eachImageDiv.append("Rating:" + rating);
+                        eachImageDiv.append(image);
+                        $("#searchResultArea").append(animalDiv);
+                        eachImageDiv.addClass("card imageDivStyle ");
+                        animalDiv.append(eachImageDiv);
 
 
 
-                };
+                    };
 
+                }, error: function () {
+                    alert("hello");
+                }
             });
 
 
