@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 
-   
+    
     var pageHeader = $("<h1> Animal Gifs! Enter a new animal on the right to see the images.");
     $("<body>").prepend(pageHeader);
     //append inside of container div on html
@@ -62,6 +62,7 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET",
             success: function (response) {
+                console.log(response);
                 animalDiv.empty();
                 for (var i = 0; i < response.data.length; i++) {
                     
@@ -69,10 +70,11 @@ $(document).ready(function () {
                     var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
                     //grabs the gif image from api
                     var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
-                    downloadGif = response.data[i].images.fixed_height_small.url;
+                    var downloadGif =  response.data[i].images.fixed_height_small.url;
                     // straight up borrowed the i class styling from someone on wc3 school, liked the styling and it saved me time.
-                    var downloadButton = $("<button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button>");
-                    downloadButton.attr("href", downloadGif);
+                    var downloadButton = $("<a download='"+ downloadGif +"' href='" + downloadGif +"'><button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button></a>");
+                        
+                   // downloadButton.attr("href", downloadGif );
                     //grabs the rating from api
                     var rating = response.data[i].rating;
                     var image = $("<img>");
@@ -150,15 +152,15 @@ $(document).ready(function () {
 
 
     });
-
+/*
 $(document).on("click", ".downloadBtn", function(){
     
     event.preventDefault();
 
-    window.location.href = $(this).attr("href");
+    window.location.href = $(this).attr();
 
 });
-
+*/
 
 });
 
