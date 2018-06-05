@@ -70,8 +70,6 @@ $(document).ready(function () {
                     //grabs the gif image from api
                     var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
                     var downloadGif =  response.data[i].images.fixed_height_small.url;
-                    // straight up borrowed the i class styling from someone on wc3 school, liked the styling and it saved me time.
-                    var downloadButton = $("<a href='" + downloadGif + "' target='blank' download='"+ downloadGif +"'><button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button></a>");
                         
                    // downloadButton.attr("href", downloadGif );
                     //grabs the rating from api
@@ -100,7 +98,6 @@ $(document).ready(function () {
                     var eachImageDiv = $("<div>");
                     eachImageDiv.append("Rating:" + rating);
                     eachImageDiv.append(image);
-                    eachImageDiv.append(downloadButton);
                     $("#searchResultArea").append(animalDiv);
                     eachImageDiv.addClass("card imageDivStyle ");
                     animalDiv.append(eachImageDiv);
@@ -128,7 +125,7 @@ $(document).ready(function () {
             alert("Not a valid submission");
             $("#userInputText").val('');
         }
-        else if (jQuery.inArray($("#userInputText").val(), animalArray) !== -1) {
+        else if ($(inArray($("#userInputText")).val(), animalArray) !== -1) {
             var word = $("#userInputText").val();
             alert("There is already a " + word + " button");
             $("#userInputText").val('');
