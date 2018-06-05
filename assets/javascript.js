@@ -33,9 +33,9 @@ $(document).ready(function () {
     };
 
 
-    $("#wholePageDiv").append(rowDiv);
-    rowDiv.append(mainColumnDiv);
+    $("#wholePageDiv").append(rowDiv);   
     rowDiv.append(searchColumnDiv);
+    rowDiv.append(mainColumnDiv);
     mainColumnDiv.append(mainRowTitleDiv);
     mainColumnDiv.append(buttonRowDiv);
     mainColumnDiv.append(animalDiv);
@@ -72,7 +72,7 @@ $(document).ready(function () {
                     var displayGifImageUrl = response.data[i].images.fixed_height_small.url;
                     var downloadGif =  response.data[i].images.fixed_height_small.url;
                     // straight up borrowed the i class styling from someone on wc3 school, liked the styling and it saved me time.
-                    var downloadButton = $("<a download='"+ downloadGif +"' href='" + downloadGif +"'><button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button></a>");
+                    var downloadButton = $("<a href='" + downloadGif + "' target='blank' download='"+ downloadGif +"'><button class='btn downloadBtn'><i class='fa fa-download'></i> Download </button></a>");
                         
                    // downloadButton.attr("href", downloadGif );
                     //grabs the rating from api
