@@ -3,8 +3,10 @@
 .animalClassBtn {
     margin-right: 1%;
     margin-bottom: 1%;
-    width: 12%;
+    width:  auto;
     height: auto;
+    
+   
 }
 .animalImageClass {
     margin-right: 2%;
@@ -29,8 +31,12 @@ background-image: url(images/what-the-hex.png);
     background-color: DodgerBlue;
     border: none;
     color: white;
-    padding: 12px 30px;
-    font-size: 16px;
+    padding: 12px 43px;
     cursor: pointer;
     font-size: 20px;
+  
+}
+.colSpacing {
+    margin-bottom: 4%;
+    margin-top: 4%;
 }

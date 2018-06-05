@@ -2,8 +2,7 @@
 $(document).ready(function () {
 
     
-    var pageHeader = $("<h1> Animal Gifs! Enter a new animal on the right to see the images.");
-    $("<body>").prepend(pageHeader);
+
     //append inside of container div on html
     var rowDiv = $("<div>").addClass("row");
     //append maincolumndiv and search div to row div
@@ -11,10 +10,10 @@ $(document).ready(function () {
     //append rowtitlediv to mainColumndiv
     var mainRowTitleDiv = $("<div id='title'></div>").addClass("row");
     //append buttonRowDiv to mainColumnDiv
-    var buttonRowDiv = $("<div id='buttonArea'></div>");
+    var buttonRowDiv = $("<div id='buttonArea'></div>").addClass("colSpacing");
 
     //append maincolumndiv and search div to row div
-    var searchColumnDiv = $("<div id='searchArea'></div>").addClass("col-lg-4");
+    var searchColumnDiv = $("<div id='searchArea'></div>").addClass("col-lg-4 colSpacing");
     var animalDiv = $("<div>").addClass("row imageDivStyle");
 
     var animalArray = ["dog", "cat", "bear", "snake", "deer", "duck", "cow", "bull"];
@@ -24,13 +23,13 @@ $(document).ready(function () {
     var searchButton = $("<input type='text' id='userInputText' placeholder='Enter an animal'>");
     var submitButton = $("<input type='submit' value='enter' id='animalSubmit'>");
 
-    document.onkeyup = function (event) {
+    $(document).on("keyup", "#userInputText", function (event) {
 
         if (event.keyCode === 13) {
-            // Trigger the button element with a click
+            // Trigger the button element to submit using enter
             $("#animalSubmit").click();
         }
-    };
+    });
 
 
     $("#wholePageDiv").append(rowDiv);   
@@ -121,9 +120,10 @@ $(document).ready(function () {
 
     //on click function
     $("#animalSubmit").on("click", function () {
+        event.preventDefault();
+
         //checks if the user entered anything, if not alerts user, does not make button.
         if ($("#userInputText").val() === '') {
-            event.preventDefault();
 
             alert("Not a valid submission");
             $("#userInputText").val('');
@@ -134,7 +134,6 @@ $(document).ready(function () {
             $("#userInputText").val('');
         }
         else {
-            event.preventDefault();
             //takes the user's search and names the button 
             userSearch = $("#userInputText").val();
             animalArray.push(userSearch);
