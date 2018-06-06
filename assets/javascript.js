@@ -61,7 +61,7 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET",
             success: function (response) {
-                console.log(response);
+               
                 animalDiv.empty();
                 for (var i = 0; i < response.data.length; i++) {
                     
@@ -125,7 +125,7 @@ $(document).ready(function () {
             alert("Not a valid submission");
             $("#userInputText").val('');
         }
-        else if ($(inArray($("#userInputText")).val(), animalArray) !== -1) {
+        else if ($.inArray($("#userInputText").val(), animalArray) !== -1) {
             var word = $("#userInputText").val();
             alert("There is already a " + word + " button");
             $("#userInputText").val('');
