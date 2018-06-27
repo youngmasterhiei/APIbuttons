@@ -64,7 +64,7 @@ $(document).ready(function () {
                
                 animalDiv.empty();
                 for (var i = 0; i < response.data.length; i++) {
-                    
+                    console.log(response);
                     //grabs the still image from api
                     var displayStillImageUrl = response.data[i].images.fixed_height_small_still.url;
                     //grabs the gif image from api
@@ -98,7 +98,7 @@ $(document).ready(function () {
                     var eachImageDiv = $("<div>");
                     eachImageDiv.append("Rating:" + rating);
                     eachImageDiv.append(image);
-                    $("#searchResultArea").append(animalDiv);
+                    // $("#searchResultArea").append(animalDiv);
                     eachImageDiv.addClass("card imageDivStyle ");
                     animalDiv.append(eachImageDiv);
 
